@@ -4,7 +4,7 @@ from .models import Employee, Attendance
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from hrms_project.employees import models
+from . import models
 
 def home(request):
     """
@@ -48,7 +48,7 @@ def employee_list(request):
     return render(request, 'employee_list.html', {'employees': employees})
 
 @csrf_exempt
-def mark_attendence(request,employee_id):
+def mark_attendance(request,employee_id):
     if request.method == 'POST':
         data=json.loads(request.body)
         employee = get_object_or_404(Employee, id=employee_id)
@@ -73,7 +73,7 @@ def attendance_details(request,employee_id):
         {'employee': employee, 'attendance': attendance}
     )
 
-def deparment_report(request):
+def department_report(request):
     """  
     Display department wise employee count.
 

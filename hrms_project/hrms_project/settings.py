@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -80,19 +79,11 @@ WSGI_APPLICATION = 'hrms_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('hrms_Project_db'),
-        'USER': os.getenv('sai'),
-        'PASSWORD': os.getenv('prashu@2908'),
-        'HOST': os.getenv('localhost'),
-        'PORT': os.getenv('3306'),
-        'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

@@ -1,5 +1,5 @@
 from rest_framework.decorators import api_view
-from rest_framework.response import JsonResponse
+from rest_framework.response import Response
 from .models import Employee, Attendance
 from .serializers import EmployeeSerializer,AttendanceSerializers
 from django.db.models import Count
@@ -13,8 +13,8 @@ def add_employee(request):
     serializers = EmployeeSerializer(data=request.data)
     if serializers.is_valid():
         serializers.save()
-        return JsonResponse({'message': 'Employee added Successfully'},status=200)
-    return JsonResponse(serializers.errors, status=400)
+        return Response({'message': 'Employee added Successfully'},status=200)
+    return Response(serializers.errors, status=400)
 
 
 @api_view(['GET'])
@@ -22,17 +22,17 @@ def list_employees(request):
     """  
     API to retrieve all Employee
     """
-    employees = Employee.objects,all()
+    employees = Employee.objects.all()
     serializers = EmployeeSerializer(employees,many = True)
-    return JsonResponse(serializers.data)
+    return Response(serializers.data)
 
 @api_view(['POST'])
 def mark_attendance(request):
     serializers = AttendanceSerializers(data=request.data)
     if serializers.is_valid():
         serializers.save()
-        return JsonResponse({'maessage': 'Attendance marked successfully'},status = 200)
-    return JsonResponse({'message': 'something went wrong!'})
+        return Response({'message': 'Attendance marked successfully'},status = 200)
+    return Response({'message': 'something went wrong!'})
 
 
 @api_view(['GET'])
@@ -42,7 +42,7 @@ def employee_attendance(request, employee_id):
     """
     attendance = Attendance.objects.filter(employee_id = employee_id)
     serializers = AttendanceSerializers(attendance,many=True)
-    return JsonResponse(serializers.data,safe=False)
+    return Response(serializers.data,safe=False)
 
 
 

@@ -1,12 +1,17 @@
 from django.urls import path
-from . import views
+from .views import *
 
 urlpatterns=[
-    path('',views.home),
-    path('api/employees/add/',views.add_employees),
-    path('api/employees/',views.get_employees),
-    path('employees/',views.employee_list),
-    path('attendance/<int:employee_id>/',views.attendance_details),
-    path('api/attendance/mark/<int:employee_id>/',views.mark_attendance),
-    path('report/',views.department_report),
+    path('', home),
+    path('employees/', employee_list),
+    path('employees/<int:employee_id>/', employee_detail),
+    path('report/', report),
+
+
+
+#   API endpoints
+    path('api/add_employee/',add_employee),
+    path('api/employees/',list_employees),
+    path('api/attendance/',mark_attendance),
+    path('api/attendance/<int:employee_id>/',employee_attendance),
 ]

@@ -7,7 +7,7 @@ class Employee(models.Model):
     
     """
     name=models.CharField(max_length=100)
-    email=models.EmailField(unique=True)
+    email=models.EmailField(unique=True, null=True, blank=False)
     address=models.TextField()
     designation=models.CharField(max_length=150)
     department=models.CharField(max_length=100)

@@ -25,7 +25,7 @@ def list_employees(request):
     """
     employees = Employee.objects.all()
     serializers = EmployeeSerializer(employees,many = True)
-    return Response(request,serializers.data)
+    return Response(serializers.data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def mark_attendance(request):

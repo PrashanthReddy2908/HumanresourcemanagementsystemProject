@@ -11,7 +11,7 @@ class Employee(models.Model):
     address=models.TextField()
     designation=models.CharField(max_length=150)
     department=models.CharField(max_length=100)
-    date_of_joining=models.DateField()
+    dateofjoining=models.DateField()
 
     def __str__(self):
         return self.name

@@ -4,6 +4,7 @@ from .models import Employee, Attendance
 from .serializers import EmployeeSerializer,AttendanceSerializers
 from django.db.models import Count
 from django.shortcuts import render
+from rest_framework import status
 
 @api_view(['POST'])
 def add_employee(request):
@@ -13,8 +14,9 @@ def add_employee(request):
     serializers = EmployeeSerializer(data=request.data)
     if serializers.is_valid():
         serializers.save()
-        return Response({'message': 'Employee added Successfully'},status=200)
-    return Response(serializers.errors, status=400)
+        return Response(serializers.data, status=status.HTTP_201_CREATED)
+
+    return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])

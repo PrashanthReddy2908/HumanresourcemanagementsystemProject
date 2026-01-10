@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import EmployeeData, AttendanceData
+from .models import Employee, Attendance
 from .serializers import EmployeeSerializer,AttendanceSerializers
 from django.db.models import Count
 from django.shortcuts import render
@@ -8,7 +8,7 @@ from rest_framework import generics, status
 
 
 class EmployeeListView(generics.ListAPIView):
-    queryset = EmployeeData.objects.all()
+    queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
 
 @api_view(['POST'])
@@ -28,7 +28,7 @@ def list_employees(request):
     """  
     API to retrieve all Employee
     """
-    employees = EmployeeData.objects.all()
+    employees = Employee.objects.all()
     serializers = EmployeeSerializer(employees,many = True)
     return Response({"message":"list of employees","data":serializers.data}, status=status.HTTP_200_OK)
 
@@ -46,7 +46,7 @@ def employee_attendance(request, employee_id):
     """  
     API to get attendance of a particular Employee
     """
-    attendance = AttendanceData.objects.filter(employee_id = employee_id)
+    attendance = Attendance.objects.filter(employee_id = employee_id)
     serializers = AttendanceSerializers(attendance,many=True)
     return Response(serializers.data,status=200)
 
@@ -56,12 +56,12 @@ def home(request):
     return render(request, 'home.html')
 
 def employee_list(request):
-    employee = EmployeeData.objects.all()
+    employee = Employee.objects.all()
     return render(request, 'employee_list.html', {'employees': employee})
 
 def employee_detail(request,employee_id):
-    attendance = AttendanceData.objects.filter(employee_id=employee_id)
+    attendance = Attendance.objects.filter(employee_id=employee_id)
     return render(request, 'attendance_detail.html', {'attendance': attendance})
 
 def report(request):
-    report_data = EmployeeData.objects.values('department').annotate(count=Count('id'))
+    report_data = Employee.objects.values('department').annotate(count=Count('id'))

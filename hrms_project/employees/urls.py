@@ -9,7 +9,7 @@ urlpatterns=[
 
 
 
-#   API endpoints
+   #API endpoints
     path('api/add_employee/',add_employee),
     path('api/employees/',list_employees),
     # path('api/employees_list/',EmployeeListView.as_view()),

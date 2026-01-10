@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Details</title>
+</head>
+<body>
+
+<h2>{{ employee.name }}</h2>
+
+<p><b>Email:</b> {{ employee.email }}</p>
+<p><b>Department:</b> {{ employee.department }}</p>
+<p><b>Designation:</b> {{ employee.designation }}</p>
+<p><b>Date of Joining:</b> {{ employee.date_of_joining }}</p>
+
+<h3>Attendance</h3>
+
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>In Time</th>
+        <th>Out Time</th>
+    </tr>
+
+    {% for att in attendance %}
+    <tr>
+        <td>{{ att.date }}</td>
+        <td>{{ att.in_time }}</td>
+        <td>{{ att.out_time }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">No attendance records</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="/">Back</a>
+
+</body>
+</html>

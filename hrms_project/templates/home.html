@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HumanResourceManagementSystem-Employee List</title>
+</head>
+<body>
+<h1>Employee Management System</h1>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Designation</th>
+        <th>Department</th>
+        <th>Date Of Joining</th>
+        <th>Details</th>
+    </tr>
+
+    {% for emp in employees %}
+    <tr>
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.address }}</td>
+        <td>{{ emp.designation }}</td>
+        <td>{{ emp.department }}</td>
+        <td>{{ emp.date_of_joining }}</td>
+        <td>
+            <a href="{% url 'employee_detail' emp.id %}">View</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="8">No employees found</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

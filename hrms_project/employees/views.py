@@ -53,7 +53,8 @@ def employee_attendance(request, employee_id):
 
 
 def home(request):
-    return render(request, 'home.html')
+    employees = Employee.objects.all()
+    return render(request, "home.html", {"employees": employees})
 
 def employee_list(request):
     employee = Employee.objects.all()
@@ -64,4 +65,5 @@ def employee_detail(request,employee_id):
     return render(request, 'attendance_detail.html', {'attendance': attendance})
 
 def report(request):
-    report_data = Employee.objects.values('department').annotate(count=Count('id'))
+    report_data = Employee.objects.values('department').annotate(count=Count('id')).order_by('department')
+    return render(request, 'department_report.html', {'report': report_data})

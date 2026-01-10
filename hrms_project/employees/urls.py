@@ -15,4 +15,5 @@ urlpatterns=[
     # path('api/employees_list/',EmployeeListView.as_view()),
     path('api/attendance/',mark_attendance),
     path('api/attendance/<int:employee_id>/',employee_attendance),
+
 ]

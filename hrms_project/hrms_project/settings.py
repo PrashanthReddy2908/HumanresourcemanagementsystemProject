@@ -41,9 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
-    'employees',
+    'employees', 
 ]
 
 MIDDLEWARE = [
@@ -80,14 +79,14 @@ WSGI_APPLICATION = 'hrms_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DDATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hrms_project_db',
-        'USER': 'sai',
-        'PASSWORD': 'prashu@2908',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': 'hrms_db',
+        'HOST':'localhost',
+        'PORT':'3306',
+        'USER':'root',
+        'PASSWORD':'Prashu@2908',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         }
@@ -130,4 +129,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Default primary key field type
+print("DB ENGINE:", DATABASES['default'].get('ENGINE'))

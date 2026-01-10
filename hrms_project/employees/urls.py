@@ -10,10 +10,10 @@ urlpatterns=[
 
 
    #API endpoints
-    path('api/add_employee/',add_employee),
+    path('api/add_employees/',add_employee),
     path('api/employees/',list_employees),
     # path('api/employees_list/',EmployeeListView.as_view()),
-    path('api/attendance/',mark_attendance),
-    path('api/attendance/<int:employee_id>/',employee_attendance),
+    path('api/mark_attendance/',mark_attendance),
+    path('api/emp_attendance/<int:employee_id>/',employee_attendance),
 
 ]

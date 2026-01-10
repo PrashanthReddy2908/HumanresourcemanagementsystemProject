@@ -1,6 +1,6 @@
 from django.db import models
 
-class Employee(models.Model):
+class EmployeeData(models.Model):
 
     """
     stores employees basic information
@@ -16,11 +16,15 @@ class Employee(models.Model):
     def __str__(self):
         return self.name
     
-class Attendance(models.Model):
-    employee=models.ForeignKey(Employee, on_delete=models.CASCADE)
+class AttendanceData(models.Model):
+    employee=models.ForeignKey(EmployeeData, on_delete=models.CASCADE)
     date=models.DateField()
     in_time=models.TimeField()
     out_time=models.TimeField()
+    status = models.CharField(
+        max_length=20,
+        default="Present"
+    )
 
     def __str__(self):
         return f"{self.employee.name}-{self.date}"

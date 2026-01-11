@@ -132,3 +132,14 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 print("DB ENGINE:", DATABASES['default'].get('ENGINE'))
+
+
+# adding rest_framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}

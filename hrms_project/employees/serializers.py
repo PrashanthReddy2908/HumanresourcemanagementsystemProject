@@ -15,4 +15,4 @@ class AttendanceSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Attendance
-        fields = '__all__'
+        fields = ['id', 'employee', 'date', 'in_time', 'out_time','status']

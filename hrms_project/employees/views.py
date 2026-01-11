@@ -1,5 +1,4 @@
-from rest_framework.decorators import api_view
-from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
@@ -10,11 +9,29 @@ from django.shortcuts import render
 from rest_framework import generics, status
 
 
+
+# ----------------------------------------------
+#             CSRF EXEMPT CLASS for DRF API
+# ----------------------------------------------
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return
+    
+
+
+
+# -----------------------------------------------
+#            Employee management APIs
+# -----------------------------------------------
+
+
 class EmployeeListView(generics.ListAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
 
 @api_view(['POST'])
+
 def add_employee(request):
     """  
     Api to add new employee
@@ -35,10 +52,12 @@ def list_employees(request):
     serializers = EmployeeSerializer(employees,many = True)
     return Response({"message":"list of employees","data":serializers.data}, status=status.HTTP_200_OK)
 
-class CsrfExemptSessionAuthentication(SessionAuthentication):
-    def enforce_csrf(self, request):
-        return
-    
+
+
+# -----------------------------------------------
+#            Attendance management APIs
+# -----------------------------------------------
+
 
 class AttendanceCreateView(generics.CreateAPIView):
     queryset = Attendance.objects.all()
@@ -48,6 +67,7 @@ class AttendanceCreateView(generics.CreateAPIView):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def mark_attendance(request):
     serializers = AttendanceSerializers(data=request.data)
     if serializers.is_valid():
@@ -66,6 +86,7 @@ def employee_attendance(request, employee_id):
     return Response(serializers.data, status=status.HTTP_200_OK)
 
 
+        # ======= HTML Views =======
 
 def home(request):
     employees = Employee.objects.all()
@@ -73,11 +94,11 @@ def home(request):
 
 def employee_list(request):
     employee = Employee.objects.all()
-    return render(request, 'employees/employee_list.html', {'employees': employee})
+    return render(request, 'employee_list.html', {'employees': employee})
 
 def employee_detail(request,employee_id):
     attendance = Attendance.objects.filter(employee_id=employee_id)
-    return render(request, 'employees/attendance_detail.html', {'attendance': attendance})
+    return render(request, 'attendance_detail.html', {'attendance': attendance})
 
 def report(request):
     report_data = Employee.objects.values('department').annotate(count=Count('id')).order_by('department')

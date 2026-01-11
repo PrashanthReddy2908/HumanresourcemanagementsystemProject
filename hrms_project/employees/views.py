@@ -1,4 +1,7 @@
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework.permissions import AllowAny
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from .models import Employee, Attendance
 from .serializers import EmployeeSerializer,AttendanceSerializers
@@ -32,6 +35,15 @@ def list_employees(request):
     serializers = EmployeeSerializer(employees,many = True)
     return Response({"message":"list of employees","data":serializers.data}, status=status.HTTP_200_OK)
 
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return
+    
+
+class AttendanceCreateView(generics.CreateAPIView):
+    authentication_classes = (CsrfExemptSessionAuthentication,)
+    permission_classes = (AllowAny,)
+
 @api_view(['POST'])
 def mark_attendance(request):
     serializers = AttendanceSerializers(data=request.data)
@@ -52,6 +64,8 @@ def employee_attendance(request, employee_id):
 
 
 
+
+
 def home(request):
     employees = Employee.objects.all()
     return render(request, "home.html", {"employees": employees})
@@ -67,3 +81,5 @@ def employee_detail(request,employee_id):
 def report(request):
     report_data = Employee.objects.values('department').annotate(count=Count('id')).order_by('department')
     return render(request, 'department_report.html', {'report': report_data})
+
+

@@ -80,7 +80,7 @@ def mark_attendance(request):
 
 
 @api_view(['GET'])
-@csrf_exempt
+@permission_classes([AllowAny])
 def employee_attendance(request, employee_id):
     """  
     API to get attendance of a particular Employee

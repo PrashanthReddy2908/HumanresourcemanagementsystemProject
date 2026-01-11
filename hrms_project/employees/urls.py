@@ -23,10 +23,10 @@ urlpatterns=[
 # ------------------------------------------------------------------
     path('api/employee_data/', add_employee, name='add_employee'),
     path('api/employee_list/', list_employees, name='list_employees'),
-    path('api/employees_list/', EmployeeListView.as_view(), name='employees_list'),
+    # path('api/employees_list/', EmployeeListView.as_view(), name='employees_list'),
     path('api/mark_attendance/', mark_attendance, name='mark_attendance'),
-    path('api/emp_attendance/', AttendanceCreateView.as_view(), name='emp_attendance'),
-    path('api/emp_attendance/<int:employee_id>/', employee_attendance, name='employee_attendance'),
+    # path('api/emp_attendance/', AttendanceCreateView.as_view(), name='emp_attendance'),
+    path('api/emp-attendance/<int:employee_id>/', employee_attendance, name='employee_attendance'),
 ]
 
 

@@ -7,8 +7,10 @@ app_name = 'employees'
 #           HTML pages
 # -------------------------------------------------
 urlpatterns=[
+
+    
     path('', home, name='home'),
-    path('employees/', employee_list, name='employee_list'),
+    path('employees_list/', employee_list, name='employee_list'),
     path('employees/<int:employee_id>/', employee_detail, name='employee_detail'),
     path('report/', report, name='report'),
 

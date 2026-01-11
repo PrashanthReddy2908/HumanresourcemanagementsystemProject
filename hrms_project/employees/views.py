@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.authentication import SessionAuthentication
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from .models import Employee, Attendance
 from .serializers import EmployeeSerializer,AttendanceSerializers
@@ -63,11 +64,10 @@ class AttendanceCreateView(generics.CreateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializers
     authentication_classes = (CsrfExemptSessionAuthentication,)
-    permission_classes = (AllowAny,)
-
+    permission_classes = [AllowAny]
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@csrf_exempt
 def mark_attendance(request):
     serializers = AttendanceSerializers(data=request.data)
     if serializers.is_valid():
@@ -77,6 +77,7 @@ def mark_attendance(request):
 
 
 @api_view(['GET'])
+@csrf_exempt
 def employee_attendance(request, employee_id):
     """  
     API to get attendance of a particular Employee
@@ -89,6 +90,9 @@ def employee_attendance(request, employee_id):
         # ======= HTML Views =======
 
 def home(request):
+    """
+    Displays home page with employee list
+    """
     employees = Employee.objects.all()
     return render(request, "employees/home.html", {"employees": employees})
 

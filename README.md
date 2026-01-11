@@ -21,16 +21,18 @@ Database	MySQL 8.0
 Tools	Postman, VS Code, Git, GitHub
 3. Project Setup
 Step 1: Clone the repository
-git clone https://github.com/PrashanthReddy2908/HumanresourcemanagementsystemProject.git
+git clone https://github.com/githubusername/HumanresourcemanagementsystemProject.git
 cd HumanresourcemanagementsystemProject
 
 Step 2: Create Virtual Environment
 python -m venv venv
 venv\Scripts\activate   # Windows
+
 source venv/bin/activate # Linux/Mac
 
 Step 3: Install Requirements
-pip install -r requirements.txt
+pip install -r requirements.txt OR
+pip freeze > requirements.txt
 
 Step 4: Configure Database
 
@@ -162,5 +164,3 @@ Zip the project folder
 Include the README.md file
 
 Push to GitHub repository
-
-Share the link for submission

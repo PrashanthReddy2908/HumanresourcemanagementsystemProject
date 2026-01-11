@@ -1,3 +1,4 @@
+from pytz import timezone
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.authentication import SessionAuthentication
@@ -6,7 +7,7 @@ from rest_framework.response import Response
 from .models import Employee, Attendance
 from .serializers import EmployeeSerializer,AttendanceSerializers
 from django.db.models import Count
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from rest_framework import generics, status
 
 
@@ -32,6 +33,7 @@ class EmployeeListView(generics.ListAPIView):
     serializer_class = EmployeeSerializer
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 
 def add_employee(request):
     """  
@@ -67,6 +69,7 @@ class AttendanceCreateView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 @csrf_exempt
 def mark_attendance(request):
     serializers = AttendanceSerializers(data=request.data)
@@ -107,3 +110,28 @@ def employee_detail(request,employee_id):
 def report(request):
     report_data = Employee.objects.values('department').annotate(count=Count('id')).order_by('department')
     return render(request, 'department_report.html', {'report': report_data})
+
+
+def mark_attendance_form(request):
+    """
+    Attendance form submission page
+    Allows user to mark in-time and out-time for an employee
+    """
+    employees = Employee.objects.all()
+
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        in_time = request.POST.get("in_time")
+        out_time = request.POST.get("out_time")
+
+        Attendance.objects.create(
+            employee_id=employee_id,
+            date=timezone.now().date(),
+            in_time=in_time,
+            out_time=out_time,
+            status=status
+        )
+
+        return redirect("employees:employee_list")
+
+    return render(request, "mark_attendance.html", {"employees": employees})

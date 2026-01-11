@@ -127,22 +127,33 @@ Department-wise employee count (GET)
 
 GET /employees/report/
 
+
 6. Sample Outputs
 Employee List
-ID	Name	Email	Designation	Department	Date of Joining
-1	John Doe	john@example.com
-	Developer	IT	2026-01-01
-2	Jane Smith	jane@example.com
-	Manager	HR	2025-12-15
-Attendance Detail
-Employee	Date	In Time	Out Time
-John Doe	2026-01-11	09:00:00	17:00:00
-Jane Smith	2026-01-11	09:15:00	17:15:00
-Department Report
-Department	Employee Count
-IT	5
-HR	3
-Finance	2
+--------------------------------------------------------------------------------
+ID	Name	       Email	       Designation	Department	Date of Joining
+--------------------------------------------------------------------------------
+1	John Doe	john@example.com      Developer	    IT	      2026-01-01
+2	Jane Smith	jane@example.com       Manager	    HR	      2025-12-15
+---------------------------------------------------------------------------------
+
+7.Attendance Detai
+------------------------------------------------------
+Employee	Date	    In Time	        Out Time
+------------------------------------------------------
+John Doe	2026-01-11	09:00:00	    17:00:00
+Jane Smith	2026-01-11	09:15:00	    17:15:00
+-------------------------------------------------------
+
+ Department Report
+ -----------|---------------
+Department	| Employee Count
+------------|----------------
+IT          |	5
+HR          |	3
+Finance	    |    2
+------------------------------
+
 7. Future Improvements
 
 Add authentication & authorization for API endpoints

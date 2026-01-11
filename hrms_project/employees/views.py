@@ -41,8 +41,11 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
     
 
 class AttendanceCreateView(generics.CreateAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializers
     authentication_classes = (CsrfExemptSessionAuthentication,)
     permission_classes = (AllowAny,)
+
 
 @api_view(['POST'])
 def mark_attendance(request):
@@ -60,26 +63,22 @@ def employee_attendance(request, employee_id):
     """
     attendance = Attendance.objects.filter(employee_id = employee_id)
     serializers = AttendanceSerializers(attendance,many=True)
-    return Response(serializers.data,status=200)
-
-
+    return Response(serializers.data, status=status.HTTP_200_OK)
 
 
 
 def home(request):
     employees = Employee.objects.all()
-    return render(request, "home.html", {"employees": employees})
+    return render(request, "employees/home.html", {"employees": employees})
 
 def employee_list(request):
     employee = Employee.objects.all()
-    return render(request, 'employee_list.html', {'employees': employee})
+    return render(request, 'employees/employee_list.html', {'employees': employee})
 
 def employee_detail(request,employee_id):
     attendance = Attendance.objects.filter(employee_id=employee_id)
-    return render(request, 'attendance_detail.html', {'attendance': attendance})
+    return render(request, 'employees/attendance_detail.html', {'attendance': attendance})
 
 def report(request):
     report_data = Employee.objects.values('department').annotate(count=Count('id')).order_by('department')
     return render(request, 'department_report.html', {'report': report_data})
-
-
